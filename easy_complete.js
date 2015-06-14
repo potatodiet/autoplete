@@ -1,11 +1,15 @@
 (function() {
   var inputs = getInputs();
-
   setupLists(inputs);
 
   inputs.forEach(function(input) {
     input.addEventListener("input", function(ev) {
       var matches = [];
+
+      if (!ev.srcElement.value) {
+        setMatches(matches, input);
+        return;
+      }
       
       var fullList = ev.srcElement.getAttribute("data-list").split(", ");
       fullList.forEach(function(entry) {
@@ -50,6 +54,11 @@
         document.createTextNode(match)
       );
       list.appendChild(element);
+
+      element.addEventListener("click", function(ev) {
+        input.value = element.innerHTML;
+        list.parentElement.removeChild(list);
+      });
     });
   }
 
@@ -58,9 +67,10 @@
       var container = document.createElement("div");
       input.parentNode.insertBefore(container, input);
       container.appendChild(input);
-      container.appendChild(
-        document.createElement("ul")
-      );
+
+      var list = document.createElement("ul");
+      list.classList.add("easy_complete");
+      container.appendChild(list);
     });
   }
 }());

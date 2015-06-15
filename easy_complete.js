@@ -24,9 +24,9 @@
 
     input.addEventListener("keydown", function(ev) {
       if (ev.keyCode === 38) {
-        traverseList(input, TraverseDirection.UP);
+        traverseList(input.nextSibling, TraverseDirection.UP);
       } else if (ev.keyCode === 40) {
-        traverseList(input, TraverseDirection.DOWN);
+        traverseList(input.nextSibling, TraverseDirection.DOWN);
       }
     });
   });
@@ -84,8 +84,7 @@
     }
   }
 
-  function traverseList(input, direction) {
-    var list = input.nextSibling;
+  function traverseList(list, direction) {
     var currentListItem = list.getElementsByClassName("active")[0];
 
     switch (direction) {

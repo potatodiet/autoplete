@@ -8,3 +8,7 @@ ul.easy_complete {
   color: blue;
 }
 
+ul.easy_complete li.active {
+  color: red;
+}
+

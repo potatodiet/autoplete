@@ -21,6 +21,14 @@
 
       setMatches(matches, input);
     });
+
+    input.addEventListener("keydown", function(ev) {
+      if (ev.keyCode === 38) {
+        traverseList(input, TraverseDirection.UP);
+      } else if (ev.keyCode === 40) {
+        traverseList(input, TraverseDirection.DOWN);
+      }
+    });
   });
   
   // Returns all inputs which contain a data-list attribute.
@@ -29,7 +37,6 @@
 
     var inputs = document.getElementsByTagName("input");
     for (var i = 0; i < inputs.length; ++i) {
-      //console.log(input);
       if (inputs[i].getAttribute("data-list") !== null) {
         matchedInputs.push(inputs[i]);
       }
@@ -75,6 +82,37 @@
     while (list.firstChild) {
       list.removeChild(list.firstChild);
     }
+  }
+
+  function traverseList(input, direction) {
+    var list = input.nextSibling;
+    var currentListItem = list.getElementsByClassName("active")[0];
+
+    switch (direction) {
+    case TraverseDirection.UP:
+      if (currentListItem) {
+        currentListItem.previousSibling.classList.add("active");
+      } else {
+        list.childNodes[list.childNodes.length - 1].classList.add("active");
+      }
+      break;
+    case TraverseDirection.DOWN:
+      if (currentListItem) {
+        currentListItem.nextSibling.classList.add("active");
+      } else {
+        list.childNodes[0].classList.add("active");
+      }
+      break;
+    }
+
+    if (currentListItem) {
+      currentListItem.classList.remove("active");
+    }
+  }
+
+  TraverseDirection = {
+    UP: 0,
+    DOWN: 1
   }
 }());
 

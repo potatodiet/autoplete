@@ -42,10 +42,7 @@
   function setMatches(matches, input) {
     var list = document.getElementsByTagName("ul")[0];
 
-    // Reset list.
-    while (list.firstChild) {
-      list.removeChild(list.firstChild);
-    }
+    clearList(list);
 
     // Add new matches.
     matches.forEach(function(match) {
@@ -57,7 +54,7 @@
 
       element.addEventListener("click", function(ev) {
         input.value = element.innerHTML;
-        list.parentElement.removeChild(list);
+        clearList(list);
       });
     });
   }
@@ -72,6 +69,12 @@
       list.classList.add("easy_complete");
       container.appendChild(list);
     });
+  }
+
+  function clearList(list) {
+    while (list.firstChild) {
+      list.removeChild(list.firstChild);
+    }
   }
 }());
 

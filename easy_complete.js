@@ -3,7 +3,7 @@
   setupLists(inputs);
 
   inputs.forEach(function(input) {
-    input.addEventListener("input", function(ev) {
+    input.addEventListener("input", function inputModified(ev) {
       var matches = [];
 
       if (!ev.srcElement.value) {
@@ -22,7 +22,7 @@
       setMatches(matches, input);
     });
 
-    input.addEventListener("keydown", function(ev) {
+    input.addEventListener("keydown", function keyOnInputPressed(ev) {
       if (ev.keyCode === 38) {
         traverseList(input.nextSibling, TraverseDirection.UP);
       } else if (ev.keyCode === 40) {
@@ -59,7 +59,7 @@
       );
       list.appendChild(element);
 
-      element.addEventListener("click", function(ev) {
+      element.addEventListener("click", function matchClicked(ev) {
         input.value = element.innerHTML;
         clearList(list);
       });

@@ -2,7 +2,10 @@
   var inputs = getInputs();
   setupLists(inputs);
 
-  inputs.forEach(function(input) {
+  for (var inputsIt = 0, inputsLength = inputs.length;
+       inputsIt < inputsLength; ++inputsIt) {
+    var input = inputs[inputsIt];
+
     input.addEventListener("input", function inputModified(ev) {
       var matches = [];
 
@@ -12,12 +15,14 @@
       }
       
       var fullList = ev.srcElement.getAttribute("data-list").split(", ");
-      fullList.forEach(function(entry) {
+      for (var fullListIt = 0, fullListLength = fullList.length;
+           fullListIt < fullListLength; ++fullListIt) {
+        var entry = fullList[fullListIt];
         // Use RegExp for case-insensitive search.
         if (entry.search(new RegExp(ev.srcElement.value, "i")) !== -1) {
           matches.push(entry);
         }
-      });
+      }
 
       setMatches(matches, input);
     });
@@ -29,18 +34,19 @@
         traverseList(input.nextSibling, TraverseDirection.DOWN);
       }
     });
-  });
+  }
   
   // Returns all inputs which contain a data-list attribute.
   function getInputs() {
     var matchedInputs = [];
 
     var inputs = document.getElementsByTagName("input");
-    for (var i = 0; i < inputs.length; ++i) {
+    for (var i = 0, length = inputs.length; i < length; ++i) {
+      var input = inputs[i];
       if (inputs[i].getAttribute("data-list") !== null) {
         matchedInputs.push(inputs[i]);
       }
-    };
+    }
 
     return matchedInputs;
   }
@@ -52,7 +58,8 @@
     clearList(list);
 
     // Add new matches.
-    matches.forEach(function(match) {
+    for (var i = 0, length = matches.length; i < length; ++i) {
+      var match = matches[i];
       var element = document.createElement("li");
       element.appendChild(
         document.createTextNode(match)
@@ -63,7 +70,7 @@
         input.value = element.innerHTML;
         clearList(list);
       });
-    });
+    }
   }
 
   function setupLists(inputs) {

@@ -49,27 +49,33 @@ EasyComplete.prototype = {
   },
 
   // Resets the matched values for a input, then adds new matches.
-  setMatches: function(matches) {
+  setMatches: function(matchesAsText) {
     this.clearList();
+    this.matches.length = matchesAsText.length;
 
     // Add new matches.
-    for (var i = 0, length = matches.length; i < length; ++i) {
-      var element = document.createElement("li");
-      element.appendChild(
-        document.createTextNode(matches[i])
-      );
-      this.list.appendChild(element);
+    for (var i = 0, length = this.matches.length; i < length; ++i) {
+      var match = document.createElement("li");
+      match.innerHTML = matchesAsText[i];
+      this.list.appendChild(match);
 
       var self = this;
-      element.addEventListener("click", function matchClicked(ev) {
+      match.addEventListener("click", function matchClicked(ev) {
         self.input.value = ev.srcElement.innerText;
         self.clearList();
       });
+
+      this.matches[i] = match;
     }
   },
 
   selectMatch: function() {
-    this.input.value = this.list.getElementsByClassName("active")[0].innerText;
+    for (var i = 0, length = this.matches.length; i < length; ++i) {
+      if (this.matches[i].classList.contains("active")) {
+        this.input.value = this.matches[i].innerText;
+        break;
+      }
+    }
   },
 
   setupList: function() {
@@ -83,8 +89,11 @@ EasyComplete.prototype = {
   },
 
   clearList: function() {
-    while (this.list.firstChild) {
-      this.list.removeChild(this.list.firstChild);
+    for (var i = 0, length = this.matches.length; i < length; ++i) {
+      this.list.removeChild(this.matches[i]);
+    }
+    while (this.matches.length > 0) {
+      this.matches.pop();
     }
   },
 
@@ -116,7 +125,9 @@ EasyComplete.prototype = {
   TraverseDirection: {
     UP: 0,
     DOWN: 1
-  }
+  },
+
+  matches: []
 }
 
 //(function() {

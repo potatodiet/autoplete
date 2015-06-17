@@ -3,8 +3,6 @@ function EasyComplete(input) {
 
   this.setupList();
 
-  this.list = input.nextSibling;
-
   // I should look into using bind with anonymous functions.
   var self = this;
 
@@ -34,10 +32,10 @@ function EasyComplete(input) {
       self.selectMatch();
       break;
     case 38:
-      self.traverseList(self.input.nextSibling, self.TraverseDirection.UP);
+      self.traverseList(self.TraverseDirection.UP);
       break;
     case 40:
-      self.traverseList(self.input.nextSibling, self.TraverseDirection.DOWN);
+      self.traverseList(self.TraverseDirection.DOWN);
       break;
     default:
       break;
@@ -52,9 +50,7 @@ EasyComplete.prototype = {
 
   // Resets the matched values for a input, then adds new matches.
   setMatches: function(matches) {
-    var list = document.getElementsByTagName("ul")[0];
-
-    this.clearList(list);
+    this.clearList();
 
     // Add new matches.
     for (var i = 0, length = matches.length; i < length; ++i) {
@@ -62,12 +58,12 @@ EasyComplete.prototype = {
       element.appendChild(
         document.createTextNode(matches[i])
       );
-      list.appendChild(element);
+      this.list.appendChild(element);
 
       var self = this;
       element.addEventListener("click", function matchClicked(ev) {
         self.input.value = ev.srcElement.innerText;
-        self.clearList(list);
+        self.clearList();
       });
     }
   },
@@ -81,33 +77,33 @@ EasyComplete.prototype = {
     this.input.parentNode.insertBefore(container, this.input);
     container.appendChild(this.input);
 
-    var list = document.createElement("ul");
-    list.classList.add("easy_complete");
-    container.appendChild(list);
+    this.list = document.createElement("ul");
+    this.list.classList.add("easy_complete");
+    container.appendChild(this.list);
   },
 
-  clearList: function(list) {
-    while (list.firstChild) {
-      list.removeChild(list.firstChild);
+  clearList: function() {
+    while (this.list.firstChild) {
+      this.list.removeChild(this.list.firstChild);
     }
   },
 
-  traverseList: function(list, direction) {
-    var currentListItem = list.getElementsByClassName("active")[0];
+  traverseList: function(direction) {
+    var currentListItem = this.list.getElementsByClassName("active")[0];
 
     switch (direction) {
     case this.TraverseDirection.UP:
       if (currentListItem) {
         currentListItem.previousSibling.classList.add("active");
       } else {
-        list.childNodes[list.childNodes.length - 1].classList.add("active");
+        this.list.childNodes[this.list.childNodes.length - 1].classList.add("active");
       }
       break;
     case this.TraverseDirection.DOWN:
       if (currentListItem) {
         currentListItem.nextSibling.classList.add("active");
       } else {
-        list.childNodes[0].classList.add("active");
+        this.list.childNodes[0].classList.add("active");
       }
       break;
     }

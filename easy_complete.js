@@ -29,7 +29,7 @@ function EasyComplete(input) {
   this.input.addEventListener("keydown", function keyOnInputPressed(ev) {
     switch (ev.keyCode) {
     case 13:
-      self.selectMatch();
+      self.selectMatch(self.findMatch());
       break;
     case 38:
       self.traverseList(self.TraverseDirection.UP);
@@ -59,23 +59,21 @@ EasyComplete.prototype = {
       match.innerHTML = matchesAsText[i];
       this.list.appendChild(match);
 
-      var self = this;
-      match.addEventListener("click", function matchClicked(ev) {
-        self.input.value = ev.srcElement.innerText;
-        self.clearList();
-      });
-
       this.matches[i] = match;
     }
   },
 
-  selectMatch: function() {
+  findMatch: function() {
     for (var i = 0, length = this.matches.length; i < length; ++i) {
       if (this.matches[i].classList.contains("active")) {
-        this.input.value = this.matches[i].innerText;
-        break;
+        return this.matches[i];
       }
     }
+  },
+
+  selectMatch: function(match) {
+    this.input.value = match.innerText;
+    this.clearList();
   },
 
   setupList: function() {
@@ -86,6 +84,11 @@ EasyComplete.prototype = {
     this.list = document.createElement("ul");
     this.list.classList.add("easy_complete");
     container.appendChild(this.list);
+
+    var self = this;
+    this.list.addEventListener("click", function matchClicked(ev) {
+      self.selectMatch(self.findMatch());
+    });
   },
 
   clearList: function() {

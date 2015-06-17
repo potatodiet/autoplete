@@ -1,108 +1,97 @@
-(function() {
-  var inputs = getInputs();
-  setupLists(inputs);
+function EasyComplete(input) {
+  this.input = input;
 
-  for (var inputsIt = 0, inputsLength = inputs.length;
-       inputsIt < inputsLength; ++inputsIt) {
-    var input = inputs[inputsIt];
+  this.setupList();
 
-    input.addEventListener("input", function inputModified(ev) {
-      var matches = [];
+  // I should look into using bind with anonymous functions.
+  var self = this;
 
-      if (!ev.srcElement.value) {
-        setMatches(matches, input);
-        return;
-      }
-      
-      var fullList = ev.srcElement.getAttribute("data-list").split(", ");
-      for (var fullListIt = 0, fullListLength = fullList.length;
-           fullListIt < fullListLength; ++fullListIt) {
-        var entry = fullList[fullListIt];
-        // Use RegExp for case-insensitive search.
-        if (entry.search(new RegExp(ev.srcElement.value, "i")) !== -1) {
-          matches.push(entry);
-        }
-      }
+  this.input.addEventListener("input", function inputModified(ev) {
+    var matches = [];
 
-      setMatches(matches, input);
-    });
-
-    input.addEventListener("keydown", function keyOnInputPressed(ev) {
-      if (ev.keyCode === 38) {
-        traverseList(input.nextSibling, TraverseDirection.UP);
-      } else if (ev.keyCode === 40) {
-        traverseList(input.nextSibling, TraverseDirection.DOWN);
-      }
-    });
-  }
-  
-  // Returns all inputs which contain a data-list attribute.
-  function getInputs() {
-    var matchedInputs = [];
-
-    var inputs = document.getElementsByTagName("input");
-    for (var i = 0, length = inputs.length; i < length; ++i) {
-      var input = inputs[i];
-      if (inputs[i].getAttribute("data-list") !== null) {
-        matchedInputs.push(inputs[i]);
+    if (!ev.srcElement.value) {
+      self.setMatches(matches);
+      return;
+    }
+    
+    var fullList = ev.srcElement.getAttribute("data-list").split(", ");
+    for (var i = 0, length = fullList.length; i < length; ++i) {
+      var entry = fullList[i];
+      // Use RegExp for case-insensitive search.
+      if (entry.search(new RegExp(ev.srcElement.value, "i")) !== -1) {
+        matches.push(entry);
       }
     }
 
-    return matchedInputs;
-  }
+    self.setMatches(matches);
+  });
+
+  this.input.addEventListener("keydown", function keyOnInputPressed(ev) {
+    if (ev.keyCode === 38) {
+      self.traverseList(self.input.nextSibling, self.TraverseDirection.UP);
+    } else if (ev.keyCode === 40) {
+      self.traverseList(self.input.nextSibling, self.TraverseDirection.DOWN);
+    }
+  });
+}
+
+EasyComplete.prototype = {
+  testing: function(test) {
+    console.log(test);
+  },
 
   // Resets the matched values for a input, then adds new matches.
-  function setMatches(matches, input) {
+  setMatches: function(matches) {
     var list = document.getElementsByTagName("ul")[0];
 
-    clearList(list);
+    this.clearList(list);
 
     // Add new matches.
     for (var i = 0, length = matches.length; i < length; ++i) {
-      var match = matches[i];
       var element = document.createElement("li");
       element.appendChild(
-        document.createTextNode(match)
+        document.createTextNode(matches[i])
       );
       list.appendChild(element);
 
+      var self = this;
+      // For some reason only the click event always
+      // registers for the bottom elemnt.
       element.addEventListener("click", function matchClicked(ev) {
-        input.value = element.innerHTML;
-        clearList(list);
+        self.input.value = element.innerHTML;
+        self.clearList(list);
       });
     }
-  }
+  },
 
-  function setupLists(inputs) {
-    inputs.forEach(function(input) {
-      var container = document.createElement("div");
-      input.parentNode.insertBefore(container, input);
-      container.appendChild(input);
+  setupList: function() {
+    var container = document.createElement("div");
+    this.input.parentNode.insertBefore(container, this.input);
+    container.appendChild(this.input);
 
-      var list = document.createElement("ul");
-      list.classList.add("easy_complete");
-      container.appendChild(list);
-    });
-  }
+    var list = document.createElement("ul");
+    list.classList.add("easy_complete");
+    container.appendChild(list);
+  },
 
-  function clearList(list) {
+  clearList: function(list) {
     while (list.firstChild) {
       list.removeChild(list.firstChild);
     }
-  }
+  },
 
-  function traverseList(list, direction) {
+  traverseList: function(list, direction) {
     var currentListItem = list.getElementsByClassName("active")[0];
 
     switch (direction) {
-    case TraverseDirection.UP:
+    case this.TraverseDirection.UP:
       if (currentListItem) {
         currentListItem.previousSibling.classList.add("active");
       } else {
         list.childNodes[list.childNodes.length - 1].classList.add("active");
       }
       break;
-    case TraverseDirection.DOWN:
+    case this.TraverseDirection.DOWN:
       if (currentListItem) {
         currentListItem.nextSibling.classList.add("active");
       } else {
@@ -114,11 +103,21 @@
     if (currentListItem) {
       currentListItem.classList.remove("active");
     }
-  }
+  },
 
-  TraverseDirection = {
+  TraverseDirection: {
     UP: 0,
     DOWN: 1
   }
-}());
+}
+
+//(function() {
+  // Initialize all standard inputs.
+  var inputs = document.getElementsByTagName("input");
+  for (var i = 0, length = inputs.length; i < length; ++i) {
+    if (inputs[i].getAttribute("data-list") !== null) {
+      new EasyComplete(inputs[i]);
+    }
+  }
+//}());
 

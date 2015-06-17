@@ -55,10 +55,8 @@ EasyComplete.prototype = {
       list.appendChild(element);
 
       var self = this;
-      // For some reason only the click event always
-      // registers for the bottom elemnt.
       element.addEventListener("click", function matchClicked(ev) {
-        self.input.value = element.innerHTML;
+        self.input.value = ev.srcElement.innerText;
         self.clearList(list);
       });
     }

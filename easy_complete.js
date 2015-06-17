@@ -92,9 +92,7 @@ EasyComplete.prototype = {
     for (var i = 0, length = this.matches.length; i < length; ++i) {
       this.list.removeChild(this.matches[i]);
     }
-    while (this.matches.length > 0) {
-      this.matches.pop();
-    }
+    this.matches.length = 0;
   },
 
   traverseList: function(direction) {

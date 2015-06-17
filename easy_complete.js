@@ -3,6 +3,8 @@ function EasyComplete(input) {
 
   this.setupList();
 
+  this.list = input.nextSibling;
+
   // I should look into using bind with anonymous functions.
   var self = this;
 
@@ -27,10 +29,18 @@ function EasyComplete(input) {
   });
 
   this.input.addEventListener("keydown", function keyOnInputPressed(ev) {
-    if (ev.keyCode === 38) {
+    switch (ev.keyCode) {
+    case 13:
+      self.selectMatch();
+      break;
+    case 38:
       self.traverseList(self.input.nextSibling, self.TraverseDirection.UP);
-    } else if (ev.keyCode === 40) {
+      break;
+    case 40:
       self.traverseList(self.input.nextSibling, self.TraverseDirection.DOWN);
+      break;
+    default:
+      break;
     }
   });
 }
@@ -60,6 +70,10 @@ EasyComplete.prototype = {
         self.clearList(list);
       });
     }
+  },
+
+  selectMatch: function() {
+    this.input.value = this.list.getElementsByClassName("active")[0].innerText;
   },
 
   setupList: function() {

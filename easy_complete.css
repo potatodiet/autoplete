@@ -12,3 +12,7 @@ ul.easy_complete li.active {
   color: red;
 }
 
+ul.easy_complete li:not(.visible) {
+  display: none;
+}
+

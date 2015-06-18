@@ -7,23 +7,19 @@ function EasyComplete(input) {
   var self = this;
 
   this.input.addEventListener("input", function inputModified(ev) {
-    var matches = [];
-
     if (!ev.srcElement.value) {
-      self.setMatches(matches);
       return;
     }
-    
-    var fullList = ev.srcElement.getAttribute("data-list").split(", ");
-    for (var i = 0, length = fullList.length; i < length; ++i) {
-      var entry = fullList[i];
+
+    self.clearList();
+
+    for (var i = 0, length = self.possibleMatches.length; i < length; ++i) {
+      var entry = self.possibleMatches[i];
       // Use RegExp for case-insensitive search.
-      if (entry.search(new RegExp(ev.srcElement.value, "i")) !== -1) {
-        matches.push(entry);
+      if (entry.innerText.search(new RegExp(ev.srcElement.value, "i")) !== -1) {
+        self.addMatch(entry);
       }
     }
-
-    self.setMatches(matches);
   });
 
   this.input.addEventListener("keydown", function keyOnInputPressed(ev) {
@@ -44,22 +40,18 @@ function EasyComplete(input) {
 }
 
 EasyComplete.prototype = {
-  testing: function(test) {
-    console.log(test);
+  // Converts a possible match into a real match.
+  addMatch: function(match) {
+    match.classList.add("visible");
+    this.matches.push(match);
   },
 
-  // Resets the matched values for a input, then adds new matches.
-  setMatches: function(matchesAsText) {
-    this.clearList();
-    this.matches.length = matchesAsText.length;
-
-    // Add new matches.
-    for (var i = 0, length = this.matches.length; i < length; ++i) {
-      var match = document.createElement("li");
-      match.innerHTML = matchesAsText[i];
-      this.list.appendChild(match);
-
-      this.matches[i] = match;
+  // Converts a real match back into a possible match.
+  removeMatch: function(match) {
+    match.classList.remove("visible");
+    var index = this.matches.indexOf(match);
+    if (index > -1) {
+      this.matches.splice(index, 1);
     }
   },
 
@@ -89,11 +81,19 @@ EasyComplete.prototype = {
     this.list.addEventListener("click", function matchClicked(ev) {
       self.selectMatch(self.findMatch());
     });
+
+    var rawPossibleMatches = this.input.getAttribute("data-list").split(", ");
+    this.possibleMatches.length = rawPossibleMatches.length;
+    for (var i = 0, length = this.possibleMatches.length; i < length; ++i) {
+      this.possibleMatches[i]  = document.createElement("li");
+      this.possibleMatches[i].innerHTML = rawPossibleMatches[i];
+      this.list.appendChild(this.possibleMatches[i]);
+    }
   },
 
   clearList: function() {
-    for (var i = 0, length = this.matches.length; i < length; ++i) {
-      this.list.removeChild(this.matches[i]);
+    for (var i = this.matches.length - 1; i >= 0; --i) {
+      this.removeMatch(this.matches[i]);
     }
     this.matches.length = 0;
   },
@@ -128,10 +128,13 @@ EasyComplete.prototype = {
     DOWN: 1
   },
 
-  matches: []
+  matches: [],
+  possibleMatches: []
 }
 
-//(function() {
+// For some reason the self-executing function needs to be held in a variable.
+// 'this' doesn't work unless it's held in a variable.
+var easyCompleteInit = (function() {
   // Initialize all standard inputs.
   var inputs = document.getElementsByTagName("input");
   for (var i = 0, length = inputs.length; i < length; ++i) {
@@ -139,5 +142,5 @@ EasyComplete.prototype = {
       new EasyComplete(inputs[i]);
     }
   }
-//}());
+}());
 

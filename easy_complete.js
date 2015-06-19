@@ -1,22 +1,37 @@
-function EasyComplete(input) {
-  this.input = input;
+"use strict";
 
-  this.setupList();
+function EasyComplete(input, config) {
+  this.input = input;
+  this.matches = [];
+  this.possibleMatches = [];
+
+  // User editable data.
+  this.config = {
+    filter: function(input, possibleMatch) {
+      return possibleMatch.search(new RegExp(input, "i")) !== -1;
+    }
+  };
+
+  if (config) {
+    this.mergeHash(this.config, config);
+    this.setupList(config["list"]);
+  } else {
+    this.setupList();
+  }
 
   // I should look into using bind with anonymous functions.
-  var self = this;
+  let self = this;
 
   this.input.addEventListener("input", function inputModified(ev) {
+    self.clearList();
+    
     if (!ev.srcElement.value) {
       return;
     }
 
-    self.clearList();
-
     for (var i = 0, length = self.possibleMatches.length; i < length; ++i) {
       var entry = self.possibleMatches[i];
-      // Use RegExp for case-insensitive search.
-      if (entry.innerText.search(new RegExp(ev.srcElement.value, "i")) !== -1) {
+      if (self.config.filter(ev.srcElement.value, entry.innerText)) {
         self.addMatch(entry);
       }
     }
@@ -68,8 +83,8 @@ EasyComplete.prototype = {
     this.clearList();
   },
 
-  setupList: function() {
-    var container = document.createElement("div");
+  setupList: function(rawList) {
+    var container = document.createElement("span");
     this.input.parentNode.insertBefore(container, this.input);
     container.appendChild(this.input);
 
@@ -82,11 +97,11 @@ EasyComplete.prototype = {
       self.selectMatch(self.findMatch());
     });
 
-    var rawPossibleMatches = this.input.getAttribute("data-list").split(", ");
-    this.possibleMatches.length = rawPossibleMatches.length;
+    var rawList = rawList || this.input.getAttribute("data-list").split(", ");
+    this.possibleMatches.length = rawList.length;
     for (var i = 0, length = this.possibleMatches.length; i < length; ++i) {
       this.possibleMatches[i]  = document.createElement("li");
-      this.possibleMatches[i].innerHTML = rawPossibleMatches[i];
+      this.possibleMatches[i].innerHTML = rawList[i];
       this.list.appendChild(this.possibleMatches[i]);
     }
   },
@@ -123,13 +138,16 @@ EasyComplete.prototype = {
     }
   },
 
+  mergeHash: function(first, second) {
+    for (var key in second) {
+      first[key] = second[key];
+    }
+  },
+
   TraverseDirection: {
     UP: 0,
     DOWN: 1
   },
-
-  matches: [],
-  possibleMatches: []
 }
 
 // For some reason the self-executing function needs to be held in a variable.

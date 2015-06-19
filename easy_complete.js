@@ -5,15 +5,8 @@ function EasyComplete(input, config) {
   this.matches = [];
   this.possibleMatches = [];
 
-  // User editable data.
-  this.config = {
-    filter: function(input, possibleMatch) {
-      return possibleMatch.search(new RegExp(input, "i")) !== -1;
-    }
-  };
-
-  if (config) {
-    this.mergeHash(this.config, config);
+  config = config || {};
+  if (config["list"]) {
     this.setupList(config["list"]);
   } else {
     this.setupList();
@@ -28,7 +21,7 @@ function EasyComplete(input, config) {
 
     for (var i = 0, length = this.possibleMatches.length; i < length; ++i) {
       var entry = this.possibleMatches[i];
-      if (this.config.filter(ev.srcElement.value, entry.innerText)) {
+      if (this.filter(ev.srcElement.value, entry.innerText)) {
         this.addMatch(entry);
       }
     }
@@ -135,6 +128,10 @@ EasyComplete.prototype = {
     }
   },
 
+  filter: function(input, possibleMatch) {
+    return possibleMatch.search(new RegExp(input, "i")) !== -1;
+  },
+
   mergeHash: function(first, second) {
     for (var key in second) {
       first[key] = second[key];
@@ -144,7 +141,7 @@ EasyComplete.prototype = {
   TraverseDirection: {
     UP: 0,
     DOWN: 1
-  },
+  }
 }
 
 // For some reason the self-executing function needs to be held in a variable.

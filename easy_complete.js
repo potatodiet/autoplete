@@ -30,13 +30,13 @@ function EasyComplete(input, config) {
   this.input.addEventListener("keydown", function keyOnInputPressed(ev) {
     switch (ev.keyCode) {
     case 13:
-      self.selectMatch(this.findMatch());
+      this.selectMatch(this.findMatch());
       break;
     case 38:
-      self.traverseList(this.TraverseDirection.UP);
+      this.traverseList(this.TraverseDirection.UP);
       break;
     case 40:
-      self.traverseList(this.TraverseDirection.DOWN);
+      this.traverseList(this.TraverseDirection.DOWN);
       break;
     default:
       break;

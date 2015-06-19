@@ -19,39 +19,36 @@ function EasyComplete(input, config) {
     this.setupList();
   }
 
-  // I should look into using bind with anonymous functions.
-  let self = this;
-
   this.input.addEventListener("input", function inputModified(ev) {
-    self.clearList();
+    this.clearList();
     
     if (!ev.srcElement.value) {
       return;
     }
 
-    for (var i = 0, length = self.possibleMatches.length; i < length; ++i) {
-      var entry = self.possibleMatches[i];
-      if (self.config.filter(ev.srcElement.value, entry.innerText)) {
-        self.addMatch(entry);
+    for (var i = 0, length = this.possibleMatches.length; i < length; ++i) {
+      var entry = this.possibleMatches[i];
+      if (this.config.filter(ev.srcElement.value, entry.innerText)) {
+        this.addMatch(entry);
       }
     }
-  });
+  }.bind(this));
 
   this.input.addEventListener("keydown", function keyOnInputPressed(ev) {
     switch (ev.keyCode) {
     case 13:
-      self.selectMatch(self.findMatch());
+      self.selectMatch(this.findMatch());
       break;
     case 38:
-      self.traverseList(self.TraverseDirection.UP);
+      self.traverseList(this.TraverseDirection.UP);
       break;
     case 40:
-      self.traverseList(self.TraverseDirection.DOWN);
+      self.traverseList(this.TraverseDirection.DOWN);
       break;
     default:
       break;
     }
-  });
+  }.bind(this));
 }
 
 EasyComplete.prototype = {

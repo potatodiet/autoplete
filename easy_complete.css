@@ -1,18 +1,29 @@
-ul.easy_complete {
-  padding: 0;
-  margin: 0;
-  left: 10px;
-  top: 35px;
+.easy_complete {
   display: inline-block;
-  position: absolute;
-  color: blue;
 }
 
-ul.easy_complete li.active {
+.easy_complete input {
+  display: block;
+}
+
+.easy_complete ul {
+  color: blue;
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.easy_complete li {
+  padding: 5px;
+  background-color: white;
+}
+
+.easy_complete li.active {
   color: red;
 }
 
-ul.easy_complete li:not(.visible) {
+.easy_complete li:not(.visible) {
   display: none;
 }
 

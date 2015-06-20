@@ -75,11 +75,11 @@ class EasyComplete {
 
   setupList(rawList) {
     var container = document.createElement("span");
+    container.classList.add("easy_complete");
     this.input.parentNode.insertBefore(container, this.input);
     container.appendChild(this.input);
 
     this.list = document.createElement("ul");
-    this.list.classList.add("easy_complete");
     container.appendChild(this.list);
 
     var self = this;

@@ -111,6 +111,11 @@ class EasyComplete {
       this.removeMatch(this.matches[i]);
     }
     this.matches.length = 0;
+
+    let active = this.list.getElementsByClassName("active")[0];
+    if (active) {
+      active.classList.remove("active");
+    }
   }
 
   traverseList(direction) {

@@ -5,6 +5,7 @@ class EasyComplete {
     this.input = input;
     this.matches = [];
     this.possibleMatches = [];
+    this.activeMatch = null;
 
     config = config || {};
     if (config["list"]) {
@@ -26,6 +27,8 @@ class EasyComplete {
           this.addMatch(entry);
         }
       }
+
+      this.setActiveMatch(this.matches[0]);
     }.bind(this));
 
     this.input.addEventListener("keydown", function keyOnInputPressed(ev) {
@@ -104,6 +107,10 @@ class EasyComplete {
       this.possibleMatches[i].innerHTML = rawList[i];
       this.list.appendChild(this.possibleMatches[i]);
     }
+
+    this.list.addEventListener("mouseover", function listHoverBegan(ev) {
+      this.setActiveMatch(ev.target);
+    }.bind(this));
   }
 
   clearList() {
@@ -112,34 +119,31 @@ class EasyComplete {
     }
     this.matches.length = 0;
 
-    let active = this.list.getElementsByClassName("active")[0];
-    if (active) {
-      active.classList.remove("active");
+    this.setActiveMatch(null);
+  }
+
+  setActiveMatch(match) {
+    if (this.activeMatch) {
+      this.activeMatch.classList.remove("active");
+    }
+    if (match) {
+      match.classList.add("active");
+      this.activeMatch = match;
     }
   }
 
   traverseList(direction) {
-    var currentListItem = this.list.getElementsByClassName("active")[0];
-
     switch (direction) {
     case this.TraverseDirection.UP:
-      if (currentListItem) {
-        currentListItem.previousSibling.classList.add("active");
-      } else {
-        this.list.childNodes[this.list.childNodes.length - 1].classList.add("active");
+      if (this.activeMatch.previousSibling) {
+        this.setActiveMatch(this.activeMatch.previousSibling);
       }
       break;
     case this.TraverseDirection.DOWN:
-      if (currentListItem) {
-        currentListItem.nextSibling.classList.add("active");
-      } else {
-        this.list.childNodes[0].classList.add("active");
+      if (this.activeMatch.nextSibling) {
+        this.setActiveMatch(this.activeMatch.nextSibling);
       }
       break;
-    }
-
-    if (currentListItem) {
-      currentListItem.classList.remove("active");
     }
   }
 

@@ -43,6 +43,13 @@ class EasyComplete {
         break;
       }
     }.bind(this));
+
+    this.input.addEventListener("blur", function inputLostFocus(ev) {
+      this.list.classList.remove("visible");
+    }.bind(this));
+    this.input.addEventListener("focus", function inputGainedFocus(ev) {
+      this.list.classList.add("visible");
+    }.bind(this));
   }
   
   // Converts a possible match into a real match.
@@ -80,6 +87,7 @@ class EasyComplete {
     container.appendChild(this.input);
 
     this.list = document.createElement("ul");
+    this.list.classList.add("visible");
     container.appendChild(this.list);
 
     var self = this;

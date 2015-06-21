@@ -23,6 +23,7 @@
   color: red;
 }
 
+.easy_complete ul:not(.visible),
 .easy_complete li:not(.visible) {
   display: none;
 }

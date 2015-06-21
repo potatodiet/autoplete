@@ -141,12 +141,6 @@ class EasyComplete {
   filter(input, possibleMatch) {
     return possibleMatch.search(new RegExp(input, "i")) !== -1;
   }
-
-  mergeHash(first, second) {
-    for (var key in second) {
-      first[key] = second[key];
-    }
-  }
 }
 
 // I'm not sure how to properly define static variables.

@@ -15,7 +15,7 @@ class EasyComplete {
 
     this.input.addEventListener("input", function inputModified(ev) {
       this.clearList();
-      
+
       if (!ev.srcElement.value) {
         return;
       }
@@ -53,7 +53,7 @@ class EasyComplete {
       this.list.classList.add("visible");
     }.bind(this));
   }
-  
+
   // Converts a possible match into a real match.
   addMatch(match) {
     match.classList.add("visible");

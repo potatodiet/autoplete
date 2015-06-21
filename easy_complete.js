@@ -34,9 +34,11 @@ class EasyComplete {
         this.selectMatch(this.findMatch());
         break;
       case 38:
+        ev.preventDefault();
         this.traverseList(this.TraverseDirection.UP);
         break;
       case 40:
+        ev.preventDefault();
         this.traverseList(this.TraverseDirection.DOWN);
         break;
       default:

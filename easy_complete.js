@@ -1,6 +1,13 @@
 "use strict";
 
+/**
+ * @author Justin Harrison
+ */
 class EasyComplete {
+  /**
+   * @param {Element} input Element which controls displayed matches.
+   * @param {Dictionary} config Contains user configurable options such as list.
+   */
   constructor(input, config) {
     this.input = input;
     this.matches = [];
@@ -57,13 +64,21 @@ class EasyComplete {
     }.bind(this));
   }
 
-  // Converts a possible match into a real match.
+  /**
+   * Converts a possible match into a real match.
+   * @param {Element} match A possible match.
+   * @private
+   */
   addMatch(match) {
     match.classList.add("visible");
     this.matches.push(match);
   }
 
-  // Converts a real match back into a possible match.
+  /**
+   * Converts a real match back into a possible match.
+   * @param {Element} match A real match.
+   * @private
+   */
   removeMatch(match) {
     match.classList.remove("visible");
     var index = this.matches.indexOf(match);
@@ -72,6 +87,11 @@ class EasyComplete {
     }
   }
 
+  /**
+   * Searches for the current active match.
+   * @return The current active match.
+   * @private
+   */
   findMatch() {
     for (var i = 0, length = this.matches.length; i < length; ++i) {
       if (this.matches[i].classList.contains("active")) {
@@ -80,11 +100,21 @@ class EasyComplete {
     }
   }
 
+  /**
+   * Selects a successful match to replace the input's value attribute.
+   * @param {Element} match The successful match.
+   * @private
+   */
   selectMatch(match) {
     this.input.value = match.innerText;
     this.clearList();
   }
 
+  /**
+   * Initializes the list which holds all matches.
+   * @param {Array} rawList Container for all possible matches.
+   * @private
+   */
   setupList(rawList) {
     var container = document.createElement("span");
     container.classList.add("easy_complete");
@@ -112,6 +142,10 @@ class EasyComplete {
     }.bind(this));
   }
 
+  /**
+   * Resets all matches back to just possible matches.
+   * @private
+   */
   clearList() {
     for (var i = this.matches.length - 1; i >= 0; --i) {
       this.removeMatch(this.matches[i]);
@@ -121,6 +155,11 @@ class EasyComplete {
     this.setActiveMatch(null);
   }
 
+  /**
+   * Sets a match as the new active match.
+   * @param {Element} match The future active match.
+   * @private
+   */
   setActiveMatch(match) {
     if (this.activeMatch) {
       this.activeMatch.classList.remove("active");
@@ -131,6 +170,13 @@ class EasyComplete {
     }
   }
 
+  // I should look into giving a more descriptive
+  // object type than just Integer.
+  /**
+   * Allows a keyboard to select a active match using the up and down arrows.
+   * @param {Integer} direction Either up or down.
+   * @private
+   */
   traverseList(direction) {
     switch (direction) {
     case this.TraverseDirection.UP:
@@ -146,6 +192,13 @@ class EasyComplete {
     }
   }
 
+  /**
+   * Detects if a possible match is also a real match.
+   * @param {Element} input The element which we are testing matches against.
+   * @param {Element} possibleMatch The possible match which we are testing.
+   * @return {Boolean} Whether or not the possibleMatch is a correct match.
+   * @private
+   */
   filter(input, possibleMatch) {
     return possibleMatch.search(new RegExp(input, "i")) !== -1;
   }

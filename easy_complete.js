@@ -95,11 +95,6 @@ class EasyComplete {
     this.list.classList.add("visible");
     container.appendChild(this.list);
 
-    var self = this;
-    this.list.addEventListener("click", function matchClicked(ev) {
-      self.selectMatch(self.findMatch());
-    });
-
     var rawList = rawList || this.input.getAttribute("data-list").split(", ");
     this.possibleMatches.length = rawList.length;
     for (var i = 0, length = this.possibleMatches.length; i < length; ++i) {
@@ -110,6 +105,10 @@ class EasyComplete {
 
     this.list.addEventListener("mouseover", function listHoverBegan(ev) {
       this.setActiveMatch(ev.target);
+    }.bind(this));
+
+    this.list.addEventListener("mousedown", function matchClicked(ev) {
+      this.selectMatch(ev.target);
     }.bind(this));
   }
 

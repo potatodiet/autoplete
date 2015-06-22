@@ -21,6 +21,7 @@
 
 .easy_complete li.active {
   color: red;
+  cursor: pointer;
 }
 
 .easy_complete ul:not(.visible),

@@ -1,7 +1,7 @@
 "use strict";
 
 let example = (function() {
-  class CustomEasyComplete extends EasyComplete {
+  class CustomAutoplete extends Autoplete {
     constructor(input, config) {
       super(input, config);
       this.filter = this.ExactFilter;
@@ -9,7 +9,7 @@ let example = (function() {
   }
 
   let input = document.getElementById("example");
-  new CustomEasyComplete(input, {
+  new CustomAutoplete(input, {
     list: ["Java", "JavaScript", "Ruby"]
   });
 })();

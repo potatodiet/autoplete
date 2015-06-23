@@ -3,7 +3,7 @@
 /**
  * @author Justin Harrison
  */
-class EasyComplete {
+class Autoplete {
   /**
    * @param {Element} input Element which controls displayed matches.
    * @param {Dictionary} config Contains user configurable options such as list.
@@ -117,7 +117,7 @@ class EasyComplete {
    */
   setupList(rawList) {
     var container = document.createElement("span");
-    container.classList.add("easy_complete");
+    container.classList.add("autoplete");
     this.input.parentNode.insertBefore(container, this.input);
     container.appendChild(this.input);
 
@@ -204,12 +204,12 @@ class EasyComplete {
 }
 
 // I'm not sure how to properly define static variables.
-EasyComplete.prototype.TraverseDirection = {
+Autoplete.prototype.TraverseDirection = {
   UP: 0,
   DOWN: 1
 }
 
-EasyComplete.prototype.ExactFilter = function(input, possibleMatch) {
+Autoplete.prototype.ExactFilter = function(input, possibleMatch) {
   return possibleMatch.search(new RegExp(input)) !== -1;
 }
 
@@ -220,7 +220,7 @@ var easyCompleteInit = (function() {
   let inputs = document.getElementsByTagName("input");
   for (var i = 0, length = inputs.length; i < length; ++i) {
     if (inputs[i].getAttribute("data-list") !== null) {
-      new EasyComplete(inputs[i]);
+      new Autoplete(inputs[i]);
     }
   }
 }());

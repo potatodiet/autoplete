@@ -1,12 +1,12 @@
-.easy_complete {
+.autoplete {
   display: inline-block;
 }
 
-.easy_complete input {
+.autoplete input {
   display: block;
 }
 
-.easy_complete ul {
+.autoplete ul {
   color: blue;
 
   list-style: none;
@@ -14,18 +14,18 @@
   padding: 0;
 }
 
-.easy_complete li {
+.autoplete li {
   padding: 5px;
   background-color: white;
 }
 
-.easy_complete li.active {
+.autoplete li.active {
   color: red;
   cursor: pointer;
 }
 
-.easy_complete ul:not(.visible),
-.easy_complete li:not(.visible) {
+.autoplete ul:not(.visible),
+.autoplete li:not(.visible) {
   display: none;
 }
 

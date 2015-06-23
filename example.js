@@ -4,10 +4,7 @@ let example = (function() {
   class CustomEasyComplete extends EasyComplete {
     constructor(input, config) {
       super(input, config);
-    }
-
-    filter(input, possibleMatch) {
-      return possibleMatch.search(new RegExp(input)) !== -1;
+      this.filter = this.ExactFilter;
     }
   }
 

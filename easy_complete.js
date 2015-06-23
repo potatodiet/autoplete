@@ -209,6 +209,10 @@ EasyComplete.prototype.TraverseDirection = {
   DOWN: 1
 }
 
+EasyComplete.prototype.ExactFilter = function(input, possibleMatch) {
+  return possibleMatch.search(new RegExp(input)) !== -1;
+}
+
 // For some reason the self-executing function needs to be held in a variable.
 // 'this' doesn't work unless it's held in a variable.
 var easyCompleteInit = (function() {

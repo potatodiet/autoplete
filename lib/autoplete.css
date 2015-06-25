@@ -2,10 +2,6 @@
   display: inline-block;
 }
 
-.autoplete input {
-  display: block;
-}
-
 .autoplete ul {
   color: blue;
 

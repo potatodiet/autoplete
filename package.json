@@ -1,0 +1,27 @@
+{
+  "name": "autoplete",
+  "version": "0.0.1",
+  "description": "Documentation can be found [here](https://docs.matthin.com/autoplete/current/index.html).",
+  "main": "lib/autoplete.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matthin/autoplete.git"
+  },
+  "author": "Justin Harrison",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/matthin/autoplete/issues"
+  },
+  "homepage": "https://github.com/matthin/autoplete#readme",
+  "dependencies": {
+    "jsdoc": "git+https://github.com/jsdoc3/jsdoc.git",
+    "uglify-js": "~> 2.4",
+    "babel": "~> 5.6"
+  }
+}

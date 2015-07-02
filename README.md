@@ -8,7 +8,7 @@ Requirements:
 * Bundler (`$ gem install bundler`)
 * Node v0.10+
 
-### Installing
+### Installing Dependencies
 ```bash
 $ bundle install
 $ npm install

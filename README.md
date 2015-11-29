@@ -7,6 +7,7 @@ Requirements:
 * Ruby v1.9.3+
 * Bundler (`$ gem install bundler`)
 * Node v0.10+
+* TypeScript v1.6+
 
 ### Installing Dependencies
 ```bash

@@ -27,6 +27,10 @@ class Autoplete {
           this.addMatch(entry);
         }
       }
+
+      if (this.matches.length > 0) {
+        this.setActiveMatch(this.matches[0]);
+      }
     }.bind(this));
 
     input.addEventListener('keydown', function keyOnInputPressed(ev) {

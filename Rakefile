@@ -3,12 +3,18 @@ task(:build_doc) do
 end
 
 task(:compile) do
-  LIB_DIR = "lib/"
-  OUT_DIR = "compiled/"
+  lib_dir = 'lib/'
+  out_dir = 'compiled/'
 
-  %w(autoplete.js).each do |filename|
-    `node_modules/.bin/babel #{LIB_DIR + filename} |
-     node_modules/.bin/uglifyjs > #{OUT_DIR + filename}`
+  files = %w(Autoplete)
+
+  ts_files = files.map { |file| lib_dir + file + '.ts'}.join(' ')
+  `tsc --outDir #{out_dir} #{ts_files}`
+
+  js_files = files.map {|file| out_dir + file }
+  js_files.each do |file|
+    `node_modules/.bin/babel #{file + '.js'} |
+     node_modules/.bin/uglifyjs > #{file + '.min.js'}`
   end
 end
 

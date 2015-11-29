@@ -4,7 +4,7 @@ const example = (function() {
   class CustomAutoplete extends Autoplete {
     constructor(input, config) {
       super(input, config);
-      this.filter = this.ExactFilter;
+      this.filter = this.exactFilter;
     }
   }
 

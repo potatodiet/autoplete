@@ -1,6 +1,8 @@
 # Vim
 *.swp
 
+lib/Autoplete.js
+
 out/
 node_modules
 

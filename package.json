@@ -2,7 +2,7 @@
   "name": "autoplete",
   "version": "0.0.1",
   "description": "Documentation can be found [here](https://docs.matthin.com/autoplete/current/index.html).",
-  "main": "lib/autoplete.js",
+  "main": "lib/Autoplete.js",
   "directories": {
     "test": "test"
   },

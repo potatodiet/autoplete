@@ -134,15 +134,18 @@ class Autoplete {
   }
 
   private traverseList(direction: TraverseDirection): void {
+    const index: int = this.matches.indexOf(this.activeMatch);
     switch (direction) {
     case TraverseDirection.Up:
-      if (this.activeMatch.previousSibling) {
-        this.setActiveMatch(<HTMLElement> this.activeMatch.previousSibling);
+      const match: HTMLElement = this.matches[index - 1];
+      if (match) {
+        this.setActiveMatch(match);
       }
       break;
     case TraverseDirection.Down:
-      if (this.activeMatch.nextSibling) {
-        this.setActiveMatch(<HTMLElement> this.activeMatch.nextSibling);
+      const match: HTMLElement = this.matches[index + 1];
+      if (match) {
+        this.setActiveMatch(match);
       }
       break;
     }

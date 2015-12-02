@@ -5,7 +5,7 @@ class Autoplete {
   private activeMatch: HTMLElement;
   private list: HTMLElement;
 
-  constructor(input: HTMLInputElement, config: { [id: string]: any }) {
+  constructor(input: HTMLInputElement, config: { [id: string]: any } = {} ) {
     this.input = input;
     this.matches = [];
     this.possibleMatches = [];
@@ -162,7 +162,7 @@ enum TraverseDirection {
   let inputs: NodeListOf<HTMLInputElement> = document.getElementsByTagName('input');
   for (let i = 0, length = inputs.length; i < length; ++i) {
     if (inputs[i].getAttribute('data-list') !== null) {
-      new Autoplete(inputs[i], {});
+      new Autoplete(inputs[i]);
     }
   }
 }());

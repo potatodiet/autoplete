@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Autoplete</title>
+  <link rel="stylesheet" href="lib/autoplete.css">
+  <link rel="stylesheet" href="stylesheet.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/solarized_light.min.css">
+</head>
+
+<body>
+  <header>
+    <h1>Autoplete</h1>
+  </header>
+
+  <section>
+    <label for="language">
+      Choose a programming language:<br>
+      <input id="language" data-list="Ruby, C++, Java, JavaScript"></input>
+    </label>
+
+    <pre><code>
+      &lt;input id="language" data-list="Ruby, C++, Java, JavaScript"&gt;&lt;/input&gt;
+    </code></pre>
+  </section>
+
+  <script src="compiled/Autoplete.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
+

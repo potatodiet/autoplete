@@ -1,0 +1,28 @@
+body {
+  max-width: 50em;
+  margin: auto;
+  background: hsl(80, 65%, 85%);
+  font-size: 1.1em;
+}
+
+header {
+  margin: 30px 0;
+}
+
+input {
+  width: 11.5em;
+  font-size: 1.1em;
+  padding: .1em .4em;
+}
+
+.autoplete {
+  margin-top: .3em;
+}
+
+code {
+  display: block;
+  padding: 1em;
+  margin: 1.5em 0;
+  background: hsl(35, 65%, 85%);
+}
+

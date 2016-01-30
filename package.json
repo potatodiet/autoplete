@@ -22,6 +22,8 @@
   "dependencies": {
     "jsdoc": "git+https://github.com/jsdoc3/jsdoc.git",
     "uglify-js": "~> 2.4",
-    "babel": "~> 5.6"
+    "babel": "~> 5.6",
+    "typescript": "~> 1.7",
+    "tslint": "~> 3.3"
   }
 }

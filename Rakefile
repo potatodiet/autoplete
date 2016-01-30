@@ -9,8 +9,8 @@ task(:compile) do
   files = %w(AutopleteFunctional)
 
   ts_files = files.map { |file| lib_dir + file + '.ts'}.join(' ')
-  `tslint #{ts_files}`
-  puts `tsc --outDir #{out_dir} #{ts_files}`
+  `node_modules/.bin/tslint #{ts_files}`
+  puts `node_modules/.bin/tsc --outDir #{out_dir} #{ts_files}`
 
   js_files = files.map {|file| out_dir + file }
   js_files.each do |file|

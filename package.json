@@ -7,7 +7,10 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "tslint lib/*.ts",
+    "compile": "tsc --outDir compiled lib/*.ts && npm run minify",
+    "minify": "uglifyjs compiled/*.js -o compiled/Autoplete.min.js",
+    "build": "npm run lint & npm run compile"
   },
   "repository": {
     "type": "git",

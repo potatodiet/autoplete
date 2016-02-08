@@ -4,8 +4,6 @@ Documentation can be found
 
 # Developers
 Requirements:
-* Ruby v1.9.3+
-* Bundler (`$ gem install bundler`)
 * Node v0.10+
 * TypeScript v1.6+
 
@@ -17,7 +15,7 @@ $ npm install
 
 ###Compiling
 ```bash
-$ bundle exec rake compile
+$ npm run build
 ```
 
 Please try to conform to a max line width of 80.

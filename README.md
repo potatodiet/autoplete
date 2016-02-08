@@ -9,7 +9,6 @@ Requirements:
 
 ### Installing Dependencies
 ```bash
-$ bundle install
 $ npm install
 ```
 

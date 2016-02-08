@@ -6,7 +6,7 @@ task(:compile) do
   lib_dir = 'lib/'
   out_dir = 'compiled/'
 
-  files = %w(AutopleteFunctional)
+  files = %w(Autoplete)
 
   ts_files = files.map { |file| lib_dir + file + '.ts'}.join(' ')
   `node_modules/.bin/tslint #{ts_files}`

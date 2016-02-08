@@ -96,7 +96,7 @@ function filter(input: string, possibleMatch: string): boolean {
     return false;
   }
 
-  return possibleMatch.search(new RegExp(input, 'i')) !== -1
+  return possibleMatch.search(new RegExp(input, 'i')) !== -1;
 }
 
 function setActiveMatch(match: HTMLElement, list: HTMLElement): void {
